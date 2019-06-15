@@ -24,6 +24,8 @@
     "koa-bodyparser": "^4.2.1",
     "koa-decorator": "^2.0.2",
     "koa-router": "^7.4.0",
+    "mongoose": "^5.6.0",
+    "mongoose-repository": "^0.2.0",
     "nodemon": "^1.19.1",
     "request": "^2.88.0"
   },

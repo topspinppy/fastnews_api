@@ -2,7 +2,7 @@ import configs from "../../configs/app";
 import axios from "axios";
 
 const curlToLine = (method, body) => {
-  axios({
+  const bodys = axios({
     method: "post",
     url: `${configs.LINE_API.MESSAGING_API}/${method}`,
     headers: {
@@ -10,9 +10,9 @@ const curlToLine = (method, body) => {
       Authorization: `${configs.LINE_API.LINE_HEADER.Authorization}`
     },
     data: body
-  }).then(response => {
-    console.log("response => ", response.status);
-  });
+  })
+  
+  return bodys.status
 };
 
 const pushMessage = (id, msg) => {

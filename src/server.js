@@ -3,6 +3,7 @@ import bodyParser from "koa-bodyparser";
 import { load } from "koa-decorator";
 import appConfig from "./configs/app";
 import path from "path";
+import mongoose from "mongoose";
 
 const app = new Koa();
 
@@ -17,6 +18,8 @@ app.use(
     methodNotAllowed: () => new errors.MethodNotAllowed("MethodNotAllowed")
   })
 );
+
+mongoose.connect("mongodb://fastnews:fastnews1234@ds137857.mlab.com:37857/fastnews", { useNewUrlParser: true });
 
 const server = app
   .listen(appConfig.NODE_PORT, () => {
