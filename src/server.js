@@ -4,8 +4,16 @@ import { load } from "koa-decorator";
 import appConfig from "./configs/app";
 import path from "path";
 import mongoose from "mongoose";
+import jwt from 'jwt-simple';
 
 const app = new Koa();
+
+app.use(async (ctx, next) => {
+  // Set response body (will be sent as JSON)
+  ctx.body = { message: 'Hello world' };
+
+  await next();
+});
 
 app.use(bodyParser());
 const apiRouter = load(path.resolve(__dirname, "controllers"), "controller.js");

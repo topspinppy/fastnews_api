@@ -1,5 +1,5 @@
 import { HttpMethod, route } from "koa-decorator";
-import { getUserProfile, pushMessage } from "../../../utils";
+import { pushMessage } from "../../../utils";
 
 @route("/v1/message")
 export default class Message {
@@ -13,5 +13,9 @@ export default class Message {
     **/
     let reply_token = ctx.request.body;
     pushMessage(reply_token.userID, reply_token.message);
+    
+    ctx.body = {
+      message: 200
+    }
   }
 }

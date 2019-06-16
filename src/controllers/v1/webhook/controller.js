@@ -16,7 +16,7 @@ export default class Member {
       pushMessage(userID, "ลงทะเบียนเรียบร้อย");
     } else {
       const userID = reply_token.events[0].source.userId;
-      pushMessage(userID, "กรุณากรอกคำว่าลงทะเบียนเพื่อรับข่าวสารจากภาควิชา");
+      pushMessage(userID, "กรุณากรอกคำว่าลงทะเบียนเพื่อรับข้อมูลจากเรา");
     }
   }
 }
