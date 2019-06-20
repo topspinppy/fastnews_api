@@ -1,42 +1,22 @@
 import { HttpMethod, route } from "koa-decorator";
-import axios from 'axios';
-// import configs from "../../../configs";
+import axios from "axios";
+import { boardCastMessage } from "../../../utils/boardcast";
 
-
-const boardCastMessage = async (msg) => {
-  let body = JSON.stringify({
-    messages: [
-      {
-        type: "text",
-        text: msg
-      }
-    ]
-  });
-
-  const bodys = await axios({
-    method: "post",
-    url: "https://api.line.me/v2/bot/message/broadcast",
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": "Bearer MK1Eob7t8YohHTKqNn4AQ98y1Y6N1oszYU9XWaa09IpX1+XHe8ebqqTIE+10ObkjYepIzPtgHVYN3ZWRHPwBPeHSRRO0JT/pEQ/N9l57NRduzJUFwyaoHDGTm/6Sf9/ZiKutX0FN5wRFR5zEjYsRawdB04t89/1O/w1cDnyilFU="
-    },
-    data: body
-  })
-
-  return body.status
+const middlelogin = async (ctx, next) => {
+  // Set response body (will be sent as JSON)
+  console.log(ctx.request.body);
+  
+  await next();
 };
-
 @route("/v1/message")
 export default class BoardCast {
-  @route("/boardcast", HttpMethod.POST)
+  @route("/boardcast", HttpMethod.POST, middlelogin)
   async sendMessage(ctx) {
     let message = ctx.request.body;
     let state = await boardCastMessage(message.message);
-    console.log(state)
     ctx.body = {
       status: state.status,
       message: state.statusText
-    }
-    
+    };
   }
 }

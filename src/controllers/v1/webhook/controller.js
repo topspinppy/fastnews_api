@@ -7,10 +7,9 @@ export default class Member {
   async webhooks(ctx) {
     let reply_token = ctx.request.body;
     ctx.body = reply_token;
+    const userID = reply_token.events[0].source.userId;
     if (reply_token.events[0].message.text === "ลงทะเบียน" || reply_token.events[0].message.text === "สมัครสมาชิก" ) {
-      const userID = reply_token.events[0].source.userId;
       getUserProfile(userID).then(users => {
-        console.log(users)
         user.create(users)
       });
       pushMessage(userID, "ลงทะเบียนเรียบร้อย");

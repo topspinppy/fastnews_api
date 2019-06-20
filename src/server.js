@@ -4,20 +4,13 @@ import { load } from "koa-decorator";
 import appConfig from "./configs/app";
 import path from "path";
 import mongoose from "mongoose";
-import jwt from 'jwt-simple';
+import session from "koa-session";
+import passport from "koa-passport";
 
 const app = new Koa();
 
-app.use(async (ctx, next) => {
-  // Set response body (will be sent as JSON)
-  ctx.body = { message: 'Hello world' };
-
-  await next();
-});
-
 app.use(bodyParser());
 const apiRouter = load(path.resolve(__dirname, "controllers"), "controller.js");
-
 app.use(apiRouter.routes());
 app.use(
   apiRouter.allowedMethods({
@@ -27,7 +20,15 @@ app.use(
   })
 );
 
-mongoose.connect("mongodb://fastnews:fastnews1234@ds137857.mlab.com:37857/fastnews", { useNewUrlParser: true });
+app.keys = ["secret"];
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(session({}, app));
+
+mongoose.connect(
+  "mongodb://fastnews:fastnews1234@ds137857.mlab.com:37857/fastnews",
+  { useNewUrlParser: true }
+);
 
 const server = app
   .listen(appConfig.NODE_PORT, () => {
